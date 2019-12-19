@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
 
-public class ProjectileSprite : MonoBehaviour
+public class SpriteSwapper : MonoBehaviour
 {
     private SpriteRenderer _spriteRndr;
 

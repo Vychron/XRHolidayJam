@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(ProjectileSprite))]
+[RequireComponent(typeof(SpriteSwapper))]
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(Hit))]
 [RequireComponent(typeof(Rigidbody2D))]
@@ -31,7 +31,7 @@ public class Projectile : MonoBehaviour
     private Rigidbody2D _rb;
     private Health _health;
     private Hit _hit;
-    private ProjectileSprite _sprite;
+    private SpriteSwapper _sprite;
 
     // Start is called before the first frame update
     void Start()
@@ -39,7 +39,7 @@ public class Projectile : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _health = GetComponent<Health>();
         _hit = GetComponent<Hit>();
-        _sprite = GetComponent<ProjectileSprite>();
+        _sprite = GetComponent<SpriteSwapper>();
 
         _damagedTreshhold = (_damagedTreshhold != 0) ? _damagedTreshhold : _health.MaxHp / 2; 
     }
