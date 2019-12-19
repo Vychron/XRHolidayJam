@@ -8,4 +8,6 @@ public static class GameManager {
 
     public static int EnemyCount;
 
+    public static int ProjectileCount;
+
 }

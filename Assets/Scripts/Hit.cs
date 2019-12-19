@@ -7,6 +7,8 @@ using UnityEngine.Events;
 
 public class Hit : MonoBehaviour
 {
+    [SerializeField] private AudioPlayer _player;
+
     private Collider2D _cldr;
 
     [SerializeField]
@@ -30,6 +32,8 @@ public class Hit : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        _player.PlayAudio();
+
         Health hitHealth = collision.gameObject.GetComponent<Health>();
 
         Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();

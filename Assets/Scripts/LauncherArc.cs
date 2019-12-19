@@ -21,16 +21,16 @@ public class LauncherArc : MonoBehaviour {
 
     void Update() {
         if (IM.MouseDown && IM.MousePosition != _mousePosOld) {
-            //if (!_renderer.enabled) {
-            //    _renderer.enabled = true;
-            //}
+            if (!_renderer.enabled) {
+                _renderer.enabled = true;
+            }
             _mousePosOld = IM.MousePosition;
             DrawArc();
         }
         if (GameManager.CurrentGameState == GameStates.Launching) {
-            //if (_renderer.enabled) {
-            //    _renderer.enabled = false;
-            //}
+            if (_renderer.enabled) {
+                _renderer.enabled = false;
+            }
         }
     }
 

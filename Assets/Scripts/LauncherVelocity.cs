@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 [RequireComponent(typeof(LauncherQueue))]
 public class LauncherVelocity : MonoBehaviour {
 
-    private AudioPlayer _player;
+    [SerializeField] AudioPlayer _player1;
+    [SerializeField] AudioPlayer _player2;
+
 
     public Vector2 CurrentForce { get { return _currentForce; } }
     [SerializeField] private Vector2 _currentForce;
@@ -16,7 +19,6 @@ public class LauncherVelocity : MonoBehaviour {
     private Transform _currentProjectile;
 
     void Start() {
-        _player = GetComponent<AudioPlayer>();
         _queue = GetComponent<LauncherQueue>();
         _poker = transform.GetChild(0);
         ReadyNextProjectile();
@@ -46,9 +48,11 @@ public class LauncherVelocity : MonoBehaviour {
 
         if (_currentProjectile == null) {
             Debug.LogError("No projectiles found...");
+            StartCoroutine(Lose());
             return;
         }
-        _player.PlayAudio();
+        _player1.PlayAudio();
+        _player2.PlayAudio();
         Camera.main.GetComponent<CameraFollow>().FollowingTransform = _currentProjectile;
         GameManager.CurrentGameState = GameStates.Launching;
         Rigidbody2D rb = _currentProjectile.GetComponent<Rigidbody2D>();
@@ -57,16 +61,23 @@ public class LauncherVelocity : MonoBehaviour {
         _currentProjectile.GetComponent<Projectile>().airState = Projectile.ProjectileAirtime.Flying;
         _currentProjectile = null;
         _currentForce = Vector2.zero;
+        ReadyNextProjectile();
     }
 
     void ReadyNextProjectile() {
         _currentProjectile = _queue.GetNextProjectile();
         if (_currentProjectile == null) {
             Debug.LogError("No projectiles found...");
+            StartCoroutine(Lose());
             return;
         }
         _currentProjectile.GetComponent<Rigidbody2D>().simulated = false;
         _currentProjectile.position = transform.position + new Vector3(0, 0, 2);
+    }
+
+    private IEnumerator Lose() {
+        yield return new WaitForSeconds(5f);
+        GameObject.Find("UI").GetComponent<Canvas>().enabled = true;
     }
 
 }

@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 1485348543}
   - component: {fileID: 1485348544}
   - component: {fileID: 2430096325634815457}
+  - component: {fileID: 1569828123}
   m_Layer: 0
   m_Name: Launcher
   m_TagString: Untagged
@@ -154,7 +155,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: fc13f03662df2c64d8c91cc7b0c9490e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -178,6 +179,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53c5142dfc4276b44951823213d5e5ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _player1: {fileID: 2430096325634815457}
+  _player2: {fileID: 1569828123}
   _currentForce: {x: 0, y: 0}
   _forceMultiplier: 3
 --- !u!114 &3023254938739150062
@@ -193,6 +196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _projectiles:
+  - {fileID: 0}
   - {fileID: 0}
 --- !u!120 &1485348543
 LineRenderer:
@@ -317,3 +321,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _clips:
   - {fileID: 8300000, guid: 63118a0b5f315b145ab4ec829f0c856e, type: 3}
+--- !u!114 &1569828123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6125411178733904388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a41f4e6774a26904f966805b28799673, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _clips:
+  - {fileID: 8300000, guid: 8b7b220de99c3614898a7b5c9e856cc4, type: 3}
+  - {fileID: 8300000, guid: 0a168b6f74d08074bafc44219f3cbe87, type: 3}

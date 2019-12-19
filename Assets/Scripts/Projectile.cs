@@ -91,8 +91,22 @@ public class Projectile : MonoBehaviour
             ChangeSprite();
 
             Destroy(gameObject, dyingBreath);
+            
+            StartCoroutine(OnDeath());
         }
     }
+
+    private IEnumerator OnDeath() {
+        yield return new WaitForSeconds(dyingBreath - 0.1f);
+        GameManager.ProjectileCount--;
+        Debug.LogError(GameManager.ProjectileCount);
+        if (GameManager.ProjectileCount < 1) {
+            GameManager.CurrentGameState = GameStates.Paused;
+            GameObject.Find("UI").GetComponent<Canvas>().enabled = true;
+        }
+        GameManager.CurrentGameState = GameStates.Adjusting;
+    }
+
     private void Update()
     {
         switch (airState)
