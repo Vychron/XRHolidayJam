@@ -3,6 +3,8 @@
 [RequireComponent(typeof(LauncherQueue))]
 public class LauncherVelocity : MonoBehaviour {
 
+
+    public Vector2 CurrentForce { get { return _currentForce; } }
     [SerializeField] private Vector2 _currentForce;
 
     [SerializeField] private float _forceMultiplier = 4f;
@@ -24,7 +26,7 @@ public class LauncherVelocity : MonoBehaviour {
         }
         _currentForce = (Vector2)transform.position - IM.MousePosition;
         if (IM.MouseDown) {
-            _poker.localPosition = new Vector3(-_currentForce.x / 50 - 0.1f, 0, 1);
+            _poker.localPosition = new Vector3(-_currentForce.x / 30 - 0.1f, 0, 1);
 
             float angle = Mathf.Atan2(_currentForce.y, _currentForce.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
@@ -55,6 +57,10 @@ public class LauncherVelocity : MonoBehaviour {
 
     void ReadyNextProjectile() {
         _currentProjectile = _queue.GetNextProjectile();
+        if (_currentProjectile == null) {
+            Debug.LogError("No projectiles found...");
+            return;
+        }
         _currentProjectile.GetComponent<Rigidbody2D>().simulated = false;
         _currentProjectile.position = transform.position + new Vector3(0, 0, 2);
     }
