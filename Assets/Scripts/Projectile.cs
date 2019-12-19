@@ -10,16 +10,19 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public enum ProjectileState {Healthy, Damaged, Dead};
+    public enum ProjectileAirtime { None, Flying};
 
     public ProjectileState state = ProjectileState.Healthy;
+    public ProjectileAirtime airState = ProjectileAirtime.None;
 
-    public Material healthySprite;
-    public Material damagedSprite;
-    public Material deadSprite;
+    public Sprite healthySprite;
+    public Sprite damagedSprite;
 
     public float basePower;
     public float dyingBreath = 3;
     public float power = 5;
+
+    private bool hit = false;
 
     [SerializeField]
     private float _damagedTreshhold;
@@ -36,11 +39,6 @@ public class Projectile : MonoBehaviour
         _health = GetComponent<Health>();
         _hit = GetComponent<Hit>();
         _sprite = GetComponent<ProjectileSprite>();
-}
-
-    public void LaunchProjectile(Vector2 vectorAngle, float power)
-    {
-        _rb.AddForce(vectorAngle * (basePower + power));
     }
 
     public void ChangeSprite()
@@ -53,11 +51,8 @@ public class Projectile : MonoBehaviour
             case ProjectileState.Damaged:
                 _sprite.SetSprite(damagedSprite);
                 break;
-            case ProjectileState.Dead:
-                _sprite.SetSprite(deadSprite);
-                break;
             default:
-                _sprite.SetSprite(healthySprite);
+                _sprite.SetSprite(damagedSprite);
                 break;
         }
     }
@@ -75,20 +70,35 @@ public class Projectile : MonoBehaviour
                 state = ProjectileState.Healthy;
             }
         }
+        ChangeSprite();
+    }
+
+    public void SetToLanded()
+    {
+        airState = ProjectileAirtime.None;
     }
 
     public void Die()
     {
-        state = ProjectileState.Dead;
+        if (state != ProjectileState.Dead)
+        {
+            state = ProjectileState.Dead;
 
-        Destroy(gameObject, dyingBreath);
+            ChangeSprite();
+
+            Destroy(gameObject, dyingBreath);
+        }
     }
-
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        switch (airState)
         {
-            LaunchProjectile(Vector2.right, power);
+            case ProjectileAirtime.Flying:
+                float angle = Mathf.Atan2(_rb.velocity.y, _rb.velocity.x) * Mathf.Rad2Deg;
+                transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+                break;
+            default:
+                break;
         }
     }
 }

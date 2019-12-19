@@ -49,6 +49,7 @@ public class LauncherVelocity : MonoBehaviour {
         Rigidbody2D rb = _currentProjectile.GetComponent<Rigidbody2D>();
         rb.simulated = true;
         rb.velocity = _currentForce * _forceMultiplier;
+        _currentProjectile.GetComponent<Projectile>().airState = Projectile.ProjectileAirtime.Flying;
         _currentProjectile = null;
         _currentForce = Vector2.zero;
     }
