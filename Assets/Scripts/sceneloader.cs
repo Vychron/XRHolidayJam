@@ -1,12 +1,19 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class sceneloader : MonoBehaviour
+public static class SceneLoader
 {
-    // Start is called before the first frame update
-   public void LoadScene()
+
+    private static int CurrentScene;
+
+   public static void LoadNextScene()
     {
-        SceneManager.LoadScene(1);
+        CurrentScene = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(CurrentScene + 1);
+    }
+
+    public static void LoadScene(int buildIndex) {
+        SceneManager.LoadScene(buildIndex);
     }
 
 }
