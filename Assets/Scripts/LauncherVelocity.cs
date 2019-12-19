@@ -44,6 +44,7 @@ public class LauncherVelocity : MonoBehaviour {
             Debug.LogError("No projectiles found...");
             return;
         }
+        Camera.main.GetComponent<CameraFollow>().FollowingTransform = _currentProjectile;
         GameManager.CurrentGameState = GameStates.Launching;
         Rigidbody2D rb = _currentProjectile.GetComponent<Rigidbody2D>();
         rb.simulated = true;
