@@ -41,8 +41,8 @@ public class Hit : MonoBehaviour
             Debug.Log(damage);
 
             hitHealth.ReduceHealth(damage);
-
-            _onHit?.Invoke();
         }
+
+        _onHit?.Invoke();
     }
 }
