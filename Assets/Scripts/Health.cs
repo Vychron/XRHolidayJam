@@ -54,9 +54,9 @@ public class Health : MonoBehaviour
         _onHealed?.Invoke();
     }
 
-    public void Die()
+    public virtual void Die()
     {
         Debug.Log(gameObject.name + " dead");
-        Destroy(gameObject, 3);
+        Destroy(gameObject,3f);
     }
 }
