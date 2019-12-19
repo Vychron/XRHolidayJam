@@ -3,6 +3,7 @@
 [RequireComponent(typeof(LauncherQueue))]
 public class LauncherVelocity : MonoBehaviour {
 
+    private AudioPlayer _player;
 
     public Vector2 CurrentForce { get { return _currentForce; } }
     [SerializeField] private Vector2 _currentForce;
@@ -15,6 +16,7 @@ public class LauncherVelocity : MonoBehaviour {
     private Transform _currentProjectile;
 
     void Start() {
+        _player = GetComponent<AudioPlayer>();
         _queue = GetComponent<LauncherQueue>();
         _poker = transform.GetChild(0);
         ReadyNextProjectile();
@@ -46,6 +48,7 @@ public class LauncherVelocity : MonoBehaviour {
             Debug.LogError("No projectiles found...");
             return;
         }
+        _player.PlayAudio();
         Camera.main.GetComponent<CameraFollow>().FollowingTransform = _currentProjectile;
         GameManager.CurrentGameState = GameStates.Launching;
         Rigidbody2D rb = _currentProjectile.GetComponent<Rigidbody2D>();
