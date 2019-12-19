@@ -162,7 +162,7 @@ MonoBehaviour:
   basePower: 5
   dyingBreath: 3
   power: 1000
-  _damagedTreshhold: 0
+  _damagedTreshhold: 8
 --- !u!50 &643879908
 Rigidbody2D:
   serializedVersion: 4
@@ -238,7 +238,18 @@ MonoBehaviour:
   _maxHp: 10
   _onDamaged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 643879907}
+        m_MethodName: CheckState
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _onDead:
     m_PersistentCalls:
       m_Calls: []
@@ -479,6 +490,7 @@ GameObject:
   - component: {fileID: 1560432654}
   - component: {fileID: 1560432656}
   - component: {fileID: 1560432657}
+  - component: {fileID: 1560432658}
   m_Layer: 0
   m_Name: Obstacle
   m_TagString: Untagged
@@ -641,6 +653,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e414c2a36c5019344a5f01daeb87cbd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1560432658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1560432651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca826b9554c2ca146ae4ce3d163ec982, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseDamage: 3
+  _damageMultiplier: 1
+  _onHit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1646211824
 PrefabInstance:
   m_ObjectHideFlags: 0

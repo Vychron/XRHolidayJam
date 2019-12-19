@@ -10,7 +10,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public enum ProjectileState {Healthy, Damaged, Dead};
-    public enum ProjectileAirtime { None, Flying};
+    public enum ProjectileAirtime { None, Flying, Landed};
 
     public ProjectileState state = ProjectileState.Healthy;
     public ProjectileAirtime airState = ProjectileAirtime.None;
@@ -18,9 +18,10 @@ public class Projectile : MonoBehaviour
     public Sprite healthySprite;
     public Sprite damagedSprite;
 
-    public float basePower;
-    public float dyingBreath = 3;
-    public float power = 5;
+    public float basePower = 1;
+    public float dyingBreath = 1;
+    public float power = 1;
+    public float maxLifetime = 15;
 
     private bool hit = false;
 
@@ -39,6 +40,8 @@ public class Projectile : MonoBehaviour
         _health = GetComponent<Health>();
         _hit = GetComponent<Hit>();
         _sprite = GetComponent<ProjectileSprite>();
+
+        _damagedTreshhold = (_damagedTreshhold != 0) ? _damagedTreshhold : _health.MaxHp / 2; 
     }
 
     public void ChangeSprite()
@@ -75,7 +78,8 @@ public class Projectile : MonoBehaviour
 
     public void SetToLanded()
     {
-        airState = ProjectileAirtime.None;
+        Destroy(gameObject, maxLifetime);
+        airState = ProjectileAirtime.Landed;
     }
 
     public void Die()
@@ -99,6 +103,10 @@ public class Projectile : MonoBehaviour
                 break;
             default:
                 break;
+        }
+        if(_rb.velocity.magnitude <= 0.03f && airState == ProjectileAirtime.Landed)
+        {
+            Destroy(gameObject);
         }
     }
 }
