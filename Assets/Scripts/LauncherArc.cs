@@ -21,14 +21,22 @@ public class LauncherArc : MonoBehaviour {
 
     void Update() {
         if (IM.MouseDown && IM.MousePosition != _mousePosOld) {
+            //if (!_renderer.enabled) {
+            //    _renderer.enabled = true;
+            //}
             _mousePosOld = IM.MousePosition;
             DrawArc();
+        }
+        if (GameManager.CurrentGameState == GameStates.Launching) {
+            //if (_renderer.enabled) {
+            //    _renderer.enabled = false;
+            //}
         }
     }
 
     void DrawArc() {
         _shootVelocity = _launcherVelocity.CurrentForce;
-        _velocity = _shootVelocity.magnitude;
+        _velocity = _shootVelocity.magnitude * 0.955f;
         _radianAngle = Mathf.Atan2(_shootVelocity.y, _shootVelocity.x);
         _renderer.positionCount = _segments;
         _renderer.SetPositions(CalculateArcArray());
@@ -51,7 +59,7 @@ public class LauncherArc : MonoBehaviour {
 
         float x = t * maxDistance;
         float y = x * Mathf.Tan(_radianAngle) - ((x * x) / (2 * (_velocity * _velocity * Mathf.Cos(_radianAngle) * Mathf.Cos(_radianAngle))));
-        return new Vector3(x, y);
+        return new Vector3(x + transform.position.x, y + transform.position.y);
     }
 
 }
